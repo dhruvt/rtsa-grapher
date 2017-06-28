@@ -1,0 +1,26 @@
+{
+  "name": "rtsa-grapher",
+  "version": "1.0.0",
+  "description": "This project graphs incoming emotion data from the RTSA Module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhruvt/rtsa-grapher.git"
+  },
+  "author": "Dhruv Thukral",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dhruvt/rtsa-grapher/issues"
+  },
+  "homepage": "https://github.com/dhruvt/rtsa-grapher#readme",
+  "dependencies": {
+    "async": "^2.5.0",
+    "aws-kcl": "^0.6.0",
+    "aws-sdk": "^2.78.0",
+    "log4js": "^1.1.1",
+    "util": "^0.10.3"
+  }
+}
