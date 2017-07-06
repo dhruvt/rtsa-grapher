@@ -6,13 +6,7 @@ var path = require('path');
 var util = require('util');
 var kcl = require('aws-kcl');
 var logger = require('./logger');
-
-/**
- * A simple implementation for the record processor (consumer) that simply writes the data to a log file.
- *
- * Be careful not to use the 'stderr'/'stdout'/'console' as log destination since it is used to communicate with the
- * {https://github.com/awslabs/amazon-kinesis-client/blob/master/src/main/java/com/amazonaws/services/kinesis/multilang/package-info.java MultiLangDaemon}.
- */
+var os = require('os');
 
 function recordProcessor() {
   var log = logger().getLogger('recordProcessor');
@@ -38,13 +32,17 @@ function recordProcessor() {
         data = new Buffer(record.data, 'base64').toString();
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
-        log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
+				fs.appendFile('rtsa-graph.data', data + os.EOL, function err(){
+					if(err){
+						log.error('Error Writing Record: %s', err);
+					}
+				});
       }
       if (!sequenceNumber) {
         completeCallback();
         return;
       }
-      // If checkpointing, completeCallback should only be called once checkpoint is complete.
+
       processRecordsInput.checkpointer.checkpoint(sequenceNumber, function(err, sequenceNumber) {
         log.info(util.format('Checkpoint successful. ShardID: %s, SeqenceNumber: %s', shardId, sequenceNumber));
         completeCallback();
