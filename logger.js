@@ -2,10 +2,10 @@
 
 var log4js = require('log4js');
 
-function logger(){
-    var logDir = process.env.NODE_LOG_DIR !== undefined ? process.env.NODE_LOG_DIR : '.';
+function logger() {
+  var logDir = process.env.NODE_LOG_DIR !== undefined ? process.env.NODE_LOG_DIR : '.';
 
-    var config = {
+  var config = {
     "appenders": [
       {
         "type": "file",
@@ -22,14 +22,13 @@ function logger(){
     ]
   };
 
-  logjs.configure(config,{});
+  log4js.configure(config, {});
 
-  return{
-      getLogger:function(category){
-          return log4js.getLogger(category);
-      }
-  }
+  return {
+    getLogger: function(category) {
+      return log4js.getLogger(category);
+    }
+  };
+}
 
-} 
-
-modules.export = logger;
+module.exports = logger;

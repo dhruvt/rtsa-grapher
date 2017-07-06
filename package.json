@@ -4,7 +4,12 @@
   "description": "This project graphs incoming emotion data from the RTSA Module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm-run-all security-check rtsa-consumer",
+    "rtsa-consumer": "node rtsa-consumer.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "security-check": "nsp check",
+    "lint": "esw src --color",
+    "lint:watch": "npm run lint -- --watch"
   },
   "repository": {
     "type": "git",
@@ -20,7 +25,12 @@
     "async": "^2.5.0",
     "aws-kcl": "^0.6.0",
     "aws-sdk": "^2.78.0",
+    "chalk": "^1.1.3",
+    "eslint": "^4.1.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-watch": "^3.1.2",
     "log4js": "^1.1.1",
+    "nsp": "^2.6.3",
     "util": "^0.10.3"
   }
 }
