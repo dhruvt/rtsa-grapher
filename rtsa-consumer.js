@@ -32,9 +32,9 @@ function recordProcessor() {
         data = new Buffer(record.data, 'base64').toString();
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
-				fs.appendFile('rtsa-graph.data', data + os.EOL, function err(){
+				fs.appendFile('data.json', data + os.EOL, function (err){
 					if(err){
-						log.error('Error Writing Record: %s', err);
+						log.error('Error Writing Record:' + err);
 					}
 				});
       }

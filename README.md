@@ -24,6 +24,7 @@ For more information about [Amazon Kinesis][amazon-kinesis] and the client libra
 ## Running the RTSA-Grapher
 
 `npm install`
+
 `node .\run-grapher.js -p .\sample.properties -j <path-to-java.exe> -c <path-to-lib-folder> -e`
 
 The following values are used in the sample application:

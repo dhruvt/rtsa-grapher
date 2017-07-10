@@ -1,0 +1,50 @@
+<style>
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.container{
+    margin-top: 20px;
+}
+.graph_value{
+    width:48%;
+    height:500px;
+    float:left;
+}
+
+.graph_value .axis {
+    stroke-width: 1;
+}
+
+.graph_value .axis .tick line {
+    stroke: black;
+}
+
+.graph_value .axis .tick text {
+    fill: black;
+    font-size: 0.7em;
+}
+
+.graph_value .axis .domain {
+    fill: none;
+    stroke: black;
+}
+
+.graph_value .graph_value {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5;
+}
+
+.graph_emotion{
+    margin-top: 20px;
+    width:48%;
+    height:500px;
+    float:left;
+}
+
+#data_log{
+    width:48%;
+    height:1000px;
+    float:right;
+}
+</style>

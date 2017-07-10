@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm-run-all security-check rtsa-consumer",
-    "rtsa-consumer": "node rtsa-consumer.js",
+    "rtsa-consumer": "node run-consumer.js -p sample.properties -c lib -j C:\\Java\\jre1.8.0_131\\bin\\java.exe -e",
     "test": "echo \"Error: no test specified\" && exit 1",
     "security-check": "nsp check",
     "lint": "esw src --color",
@@ -26,11 +26,15 @@
     "aws-kcl": "^0.6.0",
     "aws-sdk": "^2.78.0",
     "chalk": "^1.1.3",
+    "commander": "^2.11.0",
     "eslint": "^4.1.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-watch": "^3.1.2",
+    "express": "^4.15.3",
     "log4js": "^1.1.1",
     "nsp": "^2.6.3",
+    "open": "0.0.5",
+    "path": "^0.12.7",
     "util": "^0.10.3"
   }
 }
