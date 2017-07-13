@@ -4,7 +4,7 @@ var open = require('open');
 var logger = require('./logger');
 
 
-var port = 8000;
+var port = 8080;
 var app = express();
 var log = logger().getLogger('grapher');
 
