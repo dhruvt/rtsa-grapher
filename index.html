@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-  <div class="container">
-	  <div class="graph_value"></div>
-	  <div class="data_log_container">
-	  <select id="data_log" multiple="multiple"></select>
-	  </div>
-	  <div class="graph_emotion"><ul id="emotion"></ul></div>
+  <div class="header">
+      <div class="inline">
+        <div class="connected"><div class="circle_connect"></div>Connected</div>
+        <span>Connected to Kinesis Stream: RTSADataPoints</span>
+      </div>
+      <div class="sep"></div>
+      <div class="logo">
+        <img style="height:35px;" src="aws-logo.png">
+      </div>
+      <div class="sep"></div>
+  </div>
+  <div class="graph_container">
+  	 <div class="graph_value"></div>
+	   <div class="graph_emotion"></div>
+  </div>
+  <div class="data_log_container">
+  	<div class="data_log_item" id="data_log_item">
+  	</div>
   </div>
 </body>
-
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="style.css"/>
 <script src="https://d3js.org/d3-array.v1.min.js"></script>
 <script src="https://d3js.org/d3-collection.v1.min.js"></script>

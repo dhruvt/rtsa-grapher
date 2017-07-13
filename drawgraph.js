@@ -1,5 +1,17 @@
 $( document ).ready(function() {
+	var color_values = {
+		"SAD": "#2391cc",
+		"CALM": "#91b460",
+		"DISGUSTED":"#6d1f47",
+		"HAPPY":"#e6db67",
+		"CONFUSED":"#574285",
+		"SURPRISED":"#a0506b",
+		"ANGRY":"#a6321b"
+	}
+
 	var data_list = [];
+	var log_list = [];
+
 	var start_tick_time = 1499359057316;
 	var draw_count = 0
 	//var start_tick_time = Date.now();
@@ -12,17 +24,17 @@ $( document ).ready(function() {
 	  duration = 400,	// refresh duration
 	  now = new Date(Date.now() - duration)
 
-	var width = 700,
-	  height = 500
+	var width = $(window).width() * 0.7 - 10
+	var height = 500
 
 	var x = d3.time.scale()
 	  .domain([now - (limit - 2), now - duration])
 	  .range([0, width])
 
-	y_axis_max_value = 300
+	y_axis_max_value = 100
 
 	var y = d3.scale.linear()
-	  .domain([-300, 300])
+	  .domain([-100, 100])
 	  .range([height, 0])
 
 	var line = d3.svg.line()
@@ -35,27 +47,15 @@ $( document ).ready(function() {
 	  })
 
 	var emotion_value = new Map();
-	var graph_value_svg = d3.select('.graph_value').append('svg')
+
+	svg_value = d3.select('.graph_value').append('svg')
 	  .attr('class', 'chart')
 	  .attr('width', width)
 	  .attr('height', height + 50)
-	  .append('g')
+	  .attr('transform', 'translate(0, 20)')
 
-	var axis = graph_value_svg.append('g')
-	  .attr('class', 'x axis')
-	  .attr('transform', 'translate(0,' + height + ')')
-	  .call(x.axis = d3.svg.axis().scale(x).orient('bottom'))
-
-	var yAxis = d3.svg.axis()
-	    .scale(y)
-	    .orient("right")
-	    .ticks(5);
-
-	 // Add the Y Axis
-    graph_value_svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
+	var graph_value_svg = svg_value.append('g')
+   
 	// for (var y_axis_value =0; y_axis_value <=y_axis_max_value; y_axis_value+=50)
 	// {
 	// 	graph_value_svg.append("text")
@@ -68,6 +68,11 @@ $( document ).ready(function() {
  //        .text("Price ($)");
 	// }
 
+	var header_offset = 40
+	$(".header").height(header_offset)
+	$(".data_log_container").height($(window).height() - header_offset)
+	$(".graph_value").height( ($(window).height() - header_offset) * 0.7 - 20)
+	$(".graph_emotion").height( ($(window).height() - header_offset) * 0.3 - 20)
 	
 	var paths = graph_value_svg.append('g')
 	//var circles = graph_value_svg.append('g')
@@ -85,28 +90,58 @@ $( document ).ready(function() {
 	  .attr('class', name + ' graph_value')
 	  .style('stroke', group.color)
 
-	// group.circle = circles.selectAll("circle")
- //       .data(group.data)
- //       .enter()
- //       .append("circle")
- //       .attr('class', name + ' graph_value')
- //       .style('stroke', group.color);
+ 	var rect = svg_value.append("g")
+ 		.attr('transform', 'translate(0, 0)')
+       	.append("rect")
+        .attr("x", 0)
+        .attr("y", 10)
+        .attr("width", 30)
+        .attr("height", height)
+        .attr("fill", "#0d0c11")
+
+        
+
+	var axis = svg_value.append('g')
+	  .attr('class', 'x axis')
+	  .attr('transform', 'translate(30,' + height + ')')
+	  .call(x.axis = d3.svg.axis().scale(x).orient('bottom'))
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .ticks(5);
+
+	 // Add the Y Axis
+    svg_value.append("g")
+        .attr("class", "y axis")
+        .attr('transform', 'translate(30, 0)')
+        .call(yAxis);
 
 	tick()
 
 	function sortlist() {
-		var lb = document.getElementById('data_log');
 		arrTexts = new Array();
-
-		for(i=0; i<lb.length; i++)  {
-		  arrTexts[i] = lb.options[i].text;
+		for (i = 0; i< log_list.length; i++)
+		{
+			arrTexts[i] = JSON.stringify(log_list[i]);
 		}
+
 		arrTexts.sort();
 		arrTexts.reverse();
 
-		for(i=0; i<lb.length; i++)  {
-		  lb.options[i].text = arrTexts[i];
-		  lb.options[i].value = arrTexts[i];
+		$(".data_log_item").html("")
+		for (i = 0; i < arrTexts.length; i++)
+		{
+			json_obj = JSON.parse(arrTexts[i]);
+			div_str = '<div class="data_log_detail_item">\
+			  			 <span>' + arrTexts[i] + '</span>\
+			         <div class="log_emotion">\
+			          <div class="emotion_circle" style="border-color: ' + color_values[json_obj["emotion"]] +';"></div>\
+			          <span class="emotion_span">' + json_obj["emotion"] + '</span>\
+			         </div>\
+			  		</div>'
+
+			$(".data_log_item").append(div_str);
 		}
 	}
 
@@ -125,8 +160,9 @@ $( document ).ready(function() {
 		    data_list.sort(GetSortOrder("timestamp")); //Pass the attribute to be sorted on  
 
 		    // temp_data_list = []
-		    // for (var i = 0; i < 50; i++)
+		    // for (var i = 0; i < 5; i++)
 		    // 	temp_data_list.push(data_list[i]);
+		    // draw_graph_value(temp_data_list);
 		    
 		    draw_graph_value(data_list);
 		});
@@ -156,10 +192,8 @@ $( document ).ready(function() {
 			current_data = data_list[draw_count]
 			y_value = current_data["confidence"]
 			group.data.push(y_value);
-
-			option_str = "<option>" + JSON.stringify(current_data) +"</option>";
-
-			$("#data_log").append(option_str);
+			log_list.push(current_data);
+			
 			sortlist()
 
 			//Count emotion value as realtime
@@ -169,15 +203,25 @@ $( document ).ready(function() {
 			else
 				emotion_value.set(emotion, 1)
 
-			$("#emotion").html("")
-			var li_str = ""
+			$(".graph_emotion").html("")
+			
+			var emotion_div_str = ""
 			emotion_value.forEach(function(value, key){
-					li_str += "<li>" + key + ":" + value +"</li>"
+				emotion_div_str += '<div class="input_emotion">\
+					          <div class="inputTitle">\
+					            <div class="emotion_circle" style="border-color: ' + color_values[key] +';"></div>\
+					            <span>' + key + '</span>\
+					          </div>\
+					          <div class="emotion_below">\
+					            <div class="statsTitle">Number of Events</div>\
+					            <div class="statsNumber ng-binding">' + value + '</div>\
+					          </div>\
+					        </div>'
 			})
 
-			li_str += "<li>TOTAL:***" + (draw_count + 1) +"***</li>"
+			//li_str += "<li>TOTAL:***" + (draw_count + 1) +"***</li>"
 
-			$("#emotion").append(li_str)
+			$(".graph_emotion").append(emotion_div_str)
 		
 			draw_count += 1
 		}
@@ -221,9 +265,10 @@ $( document ).ready(function() {
 		  .attr('transform', 'translate(' + x(x_axis_time - (limit - 1) * duration) + ')')
 		  .each('end', tick)
 
-	
 		// // Remove oldest data point from each group
 	  	group.data.shift()
+	  	
+
 	}
 
 });

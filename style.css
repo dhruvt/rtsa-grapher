@@ -1,14 +1,58 @@
-<style>
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+html, body {
+  background: #0d0c11;
+  color:#fff;
+  font-family: 'Roboto';
+  overflow-x:hidden;
 }
-.container{
-    margin-top: 20px;
+
+body{
+  padding: 0;
+  margin:0;
 }
-.graph_value{
-    width:48%;
-    height:500px;
+
+.header {
+    border-bottom: solid 1px #1d1d1d;
+    margin-bottom: 0px;
+    background: #2d2d2d;
+    padding: 10px 0;
+    color: #818181;
+    font-size: 15px;
+}
+.graph_container{
+    width:70%;
     float:left;
+    border-bottom: solid 1px #2d2d2d;
+}
+
+.data_log_container
+{
+    width:30%;
+    float:right;
+    font-size: 12px;
+    font-weight: 300;
+    word-break: break-all;
+    position: relative;
+    background: #2d2d2d;
+    overflow-y: auto;
+}
+
+.data_log_item{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.data_log_detail_item{
+    padding: 10px 0;
+    margin: 0 auto;
+    width:90%;
+    border-bottom: solid 1px #1d1d1d;
+}
+
+.graph_value{
+    width:100%;
+    float:left;
+    margin:5px;
 }
 
 .graph_value .axis {
@@ -16,35 +60,118 @@ body {
 }
 
 .graph_value .axis .tick line {
-    stroke: black;
+    stroke: white;
 }
 
 .graph_value .axis .tick text {
-    fill: black;
+    fill: white;
     font-size: 0.7em;
 }
 
 .graph_value .axis .domain {
     fill: none;
-    stroke: black;
+    stroke: white;
 }
 
 .graph_value .graph_value {
     fill: none;
-    stroke: black;
+    stroke: white;
     stroke-width: 1.5;
 }
+    
+.circle_connect{
+    width: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    height: 8px;
+    background: linear-gradient(to bottom, rgba(157,213,58,1) 0%,
+        rgba(161,213,79,1) 50%,
+        rgba(128,194,23,1) 51%,
+        rgba(124,188,10,1) 100%);
+    margin: 1px;
+}
 
+.inline {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    margin: 0 30px;
+    float:left;
+}
+.sep {
+    background: #1d1d1d;
+    width: 1px;
+    height: 39px;
+    margin: 0 15px;
+    display: inline-block;
+    float: left;
+}
+.logo{
+    float:left;
+    margin:auto;
+    position: relative;
+}
+.connected{
+    font-size: 10px;
+}
 .graph_emotion{
     margin-top: 20px;
-    width:48%;
-    height:500px;
+    width:100%;
     float:left;
 }
 
-#data_log{
-    width:48%;
-    height:1000px;
-    float:right;
+.input_emotion{
+    margin: 14px;
+    padding: 5px;
+    width: 160px;
+    height: 80px;
+    color: #fff;
+    display: inline-block;
+    text-align: left;
 }
-</style>
+
+.inputTitle{
+    border-bottom: solid 1px #fff;
+    color: #fff;
+    padding-left: 0px;
+    padding-bottom: 8px;
+    font-weight: 100;
+    font-size: 14px;
+}
+.emotion_circle{
+    border: 2px solid #fff;
+    border-radius: 10px;
+    height: 7px;
+    width: 7px;
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    margin-right: 3px;
+    
+}
+.emotion_span
+{
+    color:#818181;
+}
+
+.statsTitle {
+    font-size: 11px;
+    font-weight: 100;
+    color: #71716f;
+}
+
+.statsNumber {
+    font-size: 17px;
+    font-weight: 200;
+    color: #fff;
+    text-align: center;
+}
+
+.emotion_below{
+    margin-top:15px;
+    width:70%;
+}
+.log_emotion
+{
+    margin-top: 10px;
+}
